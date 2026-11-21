@@ -2,6 +2,11 @@
 
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/), versi mengikuti [Semantic Versioning](https://semver.org/lang/id/).
 
+## [1.7.0-alpha.2] - 2026-11-21
+
+### Diperbaiki
+- Idlix tidak bisa di-scroll. Penyebabnya aturan CSS global `html, body { overflow: auto !important }` yang berlaku di semua situs. Aturan itu dihapus; kunci scroll sekarang hanya dibuka setelah extension benar-benar menutup popup/overlay, dan memakai `overflow: visible`.
+
 ## [1.7.0-alpha.1] - 2026-11-21
 
 ### Ditambahkan

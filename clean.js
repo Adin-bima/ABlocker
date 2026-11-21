@@ -40,7 +40,11 @@ function clean() {
     if (safeToRemove(box)) box.remove();
   });
 
-  document.querySelectorAll(".kln, [class*='sgpb-']").forEach(e => { if (safeToRemove(e)) e.remove(); });
+  document.querySelectorAll(".kln, [class*='sgpb-']").forEach(e => {
+    if (!safeToRemove(e)) return;
+    if (/sgpb/.test(e.className)) window.__adinverseUnlock = true;
+    e.remove();
+  });
 
   document.querySelectorAll("a[href]").forEach(a => {
     if (!adLink(a)) return;
@@ -60,7 +64,7 @@ function clean() {
     const r = el.getBoundingClientRect();
     const overlay = r.width >= innerWidth * 0.9 && r.height >= innerHeight * 0.9;
     const hasAd = [...el.querySelectorAll("a[href]")].some(a => adLink(a) || (a.querySelector("img") && extHost(a)));
-    if (overlay || hasAd) el.remove();
+    if (overlay || hasAd) { el.remove(); window.__adinverseUnlock = true; }
   });
   // Overlay absolute/fixed di atas player (ID acak, z-index tinggi, berisi link iklan)
   document.querySelectorAll("body div, body section, body aside, body span").forEach(el => {
@@ -75,9 +79,15 @@ function clean() {
   });
 
   removeAntiAdblock();
+}
 
-  document.documentElement.style.overflow = "";
-  if (document.body) document.body.style.overflow = "";
+// Buka kunci scroll HANYA setelah extension menutup popup/overlay (situs biasanya mengunci scroll
+// selama popup tampil). Jangan dipaksa di semua situs: di Idlix, overflow:auto pada html+body
+// sekaligus malah membuat halaman tidak bisa di-scroll.
+function unlockScroll() {
+  for (const el of [document.documentElement, document.body]) {
+    if (el && getComputedStyle(el).overflowY === "hidden") el.style.setProperty("overflow", "visible", "important");
+  }
 }
 
 // Panel "Adblock Terdeteksi" (Komiku dan situs lain): lapisan fixed hampir layar penuh
@@ -94,12 +104,12 @@ function removeAntiAdblock() {
     if (!safeToRemove(el)) return;
     el.dataset.adinverseHidden = "1";
     el.style.setProperty("display", "none", "important");
+    window.__adinverseUnlock = true;
   });
-  // Halaman sering dikunci (tidak bisa scroll / blur) saat panel tampil
-  for (const el of [document.documentElement, document.body]) {
-    if (!el) continue;
-    if (getComputedStyle(el).overflow === "hidden") el.style.setProperty("overflow", "auto", "important");
-    if (el.style.filter) el.style.filter = "";
+  // Halaman dikunci (tidak bisa scroll / blur) selama panel tampil: buka lagi
+  if (window.__adinverseUnlock) {
+    unlockScroll();
+    for (const el of [document.documentElement, document.body]) if (el && el.style.filter) el.style.filter = "";
   }
 }
 
