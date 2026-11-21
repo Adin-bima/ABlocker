@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         adinverse-clearer
-// @version      1.6.0-alpha.1
-// @description  Hapus banner judi, popup, overlay, iklan video, pop-under, peringatan anti-adblock dan script iklan di situs streaming anime, film & komik.
+// @version      1.7.0-alpha.1
+// @description  Hapus banner judi, popup, overlay, iklan video, pop-under, notifikasi palsu, peringatan anti-adblock dan script iklan di situs streaming anime, film & komik.
 // @author       Adin-bima
 // @run-at       document-start
 // @inject-into  page
