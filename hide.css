@@ -1,5 +1,7 @@
 /* Banner judi: hanya bloknya, bukan wadah player */
 .kln, .blox.mlb.kln,
+/* Komiku: popup promo Komiku Plus (di dalam shadow DOM) */
+[data-kv-popup],
 /* Idlix */
 .nb-sponsor-pair, #xyzchat-widget-root, a[href*="4play.my.id"],
 .hero-player-playing a[href^="http"]:not([href*="idlix"]),

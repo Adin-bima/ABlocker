@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         adinverse-clearer
 // @version      1.5.0-alpha.1
-// @description  Hapus banner judi, popup, overlay, iklan video, pop-under dan script iklan di situs streaming anime & film.
+// @description  Hapus banner judi, popup, overlay, iklan video, pop-under, peringatan anti-adblock dan script iklan di situs streaming anime, film & komik.
 // @author       Adin-bima
 // @run-at       document-start
 // @inject-into  page
@@ -11,10 +11,11 @@
 // @include      *://*otakudesu*/*
 // @include      *://*anoboy*/*
 // @include      *://*idlix*/*
+// @include      *://*komiku*/*
 // ==/UserScript==
 (() => {
 // ---- CSS: sembunyikan iklan sejak awal ----
-const css = "/* Banner judi: hanya bloknya, bukan wadah player */\n.kln, .blox.mlb.kln,\n/* Idlix */\n.nb-sponsor-pair, #xyzchat-widget-root, a[href*=\"4play.my.id\"],\n.hero-player-playing a[href^=\"http\"]:not([href*=\"idlix\"]),\n/* Anoboy (ID-nya dobel, jadi pakai [id=...]) */\n#ad_box, #ad_bawah, #countDown2, [id=\"judi\"], [id=\"judi2\"], [id=\"coloma\"],\n/* Otakudesu */\n.iklan, .iklanpost, #iklanbawah, #iklantengah1, .iklantengah1, #overplay,\n/* Samehadaku */\n.ads-area-2col, .ads-grid-wrapper, #player-ad-overlay, .player-ad-overlay, .player-ad-box,\n[class*=\"sgpb-\"], [id*=\"sgpb\"],\nins.adsbygoogle, [id^=\"div-gpt-ad\"],\na[href*=\"safest.com\"], a[href*=\"t2m.io\"]\n{ display: none !important; }\nhtml, body { overflow: auto !important; }\n";
+const css = "/* Banner judi: hanya bloknya, bukan wadah player */\n.kln, .blox.mlb.kln,\n/* Komiku: popup promo Komiku Plus (di dalam shadow DOM) */\n[data-kv-popup],\n/* Idlix */\n.nb-sponsor-pair, #xyzchat-widget-root, a[href*=\"4play.my.id\"],\n.hero-player-playing a[href^=\"http\"]:not([href*=\"idlix\"]),\n/* Anoboy (ID-nya dobel, jadi pakai [id=...]) */\n#ad_box, #ad_bawah, #countDown2, [id=\"judi\"], [id=\"judi2\"], [id=\"coloma\"],\n/* Otakudesu */\n.iklan, .iklanpost, #iklanbawah, #iklantengah1, .iklantengah1, #overplay,\n/* Samehadaku */\n.ads-area-2col, .ads-grid-wrapper, #player-ad-overlay, .player-ad-overlay, .player-ad-box,\n[class*=\"sgpb-\"], [id*=\"sgpb\"],\nins.adsbygoogle, [id^=\"div-gpt-ad\"],\na[href*=\"safest.com\"], a[href*=\"t2m.io\"]\n{ display: none !important; }\nhtml, body { overflow: auto !important; }\n";
 const addCss = () => {
   if (document.getElementById("adinverse-css")) return;
   const s = document.createElement("style"); s.id = "adinverse-css"; s.textContent = css;
@@ -27,6 +28,24 @@ addCss(); document.addEventListener("DOMContentLoaded", addCss);
 (() => {
   const BAD = /(safest\.com|t2m\.io|\.biz\b|\.site\b|777|slot|gacor|toto|bandar|judi|casino|popads|popcash|propeller|adsterra|onclick|exoclick|hilltop|clickadu|monetag)/i;
   const sameSite = h => { try { return new URL(h, location.href).hostname === location.hostname; } catch { return true; } };
+
+  // 0. Script anti-adblock & pop-under: dibatalkan sebelum sempat jalan.
+  //    Extension Chrome sudah memblokirnya di jaringan (rules.json); ini cadangan untuk userscript.
+  //    Script yang ditulis di HTML terdeteksi MutationObserver sebelum dieksekusi; type-nya diganti
+  //    supaya browser tidak menjalankannya.
+  const BLOCK_SCRIPT = /(\/asset\/js\/nyamnyam\.js|analytics\.komiku\.org\/api\/w\/pop|wynnscanela\.com|xyzchat\.net|tasterdinger\.com|ads\.desustream\.com)/i;
+  const killScript = s => {
+    if (s.tagName === "SCRIPT" && s.src && BLOCK_SCRIPT.test(s.src)) {
+      s.type = "javascript/blocked";
+      s.addEventListener("beforescriptexecute", e => e.preventDefault(), { once: true });
+      s.remove();
+    }
+  };
+  new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => {
+    if (n.nodeType !== 1) return;
+    killScript(n);
+    n.querySelectorAll?.("script[src]").forEach(killScript);
+  }))).observe(document.documentElement, { childList: true, subtree: true });
 
   // 1. Pop-under: window.open ke situs lain diblokir (iklan selalu ke domain luar)
   const realOpen = window.open;
@@ -42,7 +61,7 @@ addCss(); document.addEventListener("DOMContentLoaded", addCss);
   }, true);
 
   // 3. Script iklan yang disuntik dinamis → dibatalkan sebelum dimuat
-  const blockSrc = (el, v) => el.tagName === "SCRIPT" || el.tagName === "IFRAME" ? BAD.test(String(v)) : false;
+  const blockSrc = (el, v) => el.tagName === "SCRIPT" || el.tagName === "IFRAME" ? (BAD.test(String(v)) || BLOCK_SCRIPT.test(String(v))) : false;
   for (const P of [HTMLScriptElement, HTMLIFrameElement]) {
     const d = Object.getOwnPropertyDescriptor(P.prototype, "src");
     Object.defineProperty(P.prototype, "src", {
@@ -54,6 +73,20 @@ addCss(); document.addEventListener("DOMContentLoaded", addCss);
   Element.prototype.setAttribute = function (n, v) {
     if (n === "src" && blockSrc(this, v)) return;
     return realSetAttr.call(this, n, v);
+  };
+
+  // 3b. Pop-under lewat <a target=_blank> buatan script yang di-.click() tanpa ditempel ke halaman,
+  //     atau elemen <a> yang tiba-tiba dibuat dan diklik ke domain luar (cara yang lolos dari window.open)
+  const realClick = HTMLElement.prototype.click;
+  HTMLElement.prototype.click = function () {
+    if (this instanceof HTMLAnchorElement && this.target === "_blank" && this.href && !sameSite(this.href) && !this.isConnected) return;
+    return realClick.call(this);
+  };
+  const realDispatch = EventTarget.prototype.dispatchEvent;
+  EventTarget.prototype.dispatchEvent = function (ev) {
+    if (ev && ev.type === "click" && this instanceof HTMLAnchorElement && this.target === "_blank" &&
+        this.href && !sameSite(this.href) && (!this.isConnected || !ev.isTrusted)) return false;
+    return realDispatch.call(this, ev);
   };
 
   // 4. Matikan Popup Builder (sgpb) dan redirect paksa ke situs iklan
@@ -140,8 +173,33 @@ function clean() {
     if (ext.some(adLink) || (ext.length && el.querySelector("img") && z >= 10)) el.remove();
   });
 
+  removeAntiAdblock();
+
   document.documentElement.style.overflow = "";
   if (document.body) document.body.style.overflow = "";
+}
+
+// Panel "Adblock Terdeteksi" (Komiku dan situs lain): lapisan fixed hampir layar penuh
+// dengan teks soal adblock. ID-nya acak, jadi dikenali dari isi dan ukurannya.
+// Disembunyikan, BUKAN dihapus: kalau dihapus, script-nya langsung membuat ulang terus-menerus.
+const ANTI_ADBLOCK_TEXT = /ad\s?block(er)?\s+(terdeteksi|detected)|matikan\s+ad\s?block|disable\s+(your\s+)?ad\s?block/i;
+function removeAntiAdblock() {
+  document.querySelectorAll("body > div, body > section, body > aside").forEach(el => {
+    if (el.dataset.adinverseHidden) return;
+    if (getComputedStyle(el).position !== "fixed") return;
+    const r = el.getBoundingClientRect();
+    if (r.width < innerWidth * 0.8 || r.height < innerHeight * 0.8) return;
+    if (!ANTI_ADBLOCK_TEXT.test(el.textContent || "")) return;
+    if (!safeToRemove(el)) return;
+    el.dataset.adinverseHidden = "1";
+    el.style.setProperty("display", "none", "important");
+  });
+  // Halaman sering dikunci (tidak bisa scroll / blur) saat panel tampil
+  for (const el of [document.documentElement, document.body]) {
+    if (!el) continue;
+    if (getComputedStyle(el).overflow === "hidden") el.style.setProperty("overflow", "auto", "important");
+    if (el.style.filter) el.style.filter = "";
+  }
 }
 
 // Idlix: iklan video pre-roll diputar di <video> yang sama dengan film.

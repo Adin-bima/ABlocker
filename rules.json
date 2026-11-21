@@ -466,7 +466,8 @@
     "anoboy.at",
     "anoboy.si",
     "anoboy.lol",
-    "idlixku.com"
+    "idlixku.com",
+    "komiku.org"
    ],
    "resourceTypes": [
     "script",
@@ -530,6 +531,57 @@
     "main_frame",
     "websocket",
     "other"
+   ]
+  }
+ },
+ {
+  "id": 26,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "wynnscanela.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 27,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "urlFilter": "||analytics.komiku.org/api/w/pop",
+   "resourceTypes": [
+    "script",
+    "xmlhttprequest",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 28,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "urlFilter": "/asset/js/nyamnyam.js",
+   "initiatorDomains": [
+    "komiku.org"
+   ],
+   "resourceTypes": [
+    "script"
    ]
   }
  }

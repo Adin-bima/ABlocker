@@ -74,8 +74,33 @@ function clean() {
     if (ext.some(adLink) || (ext.length && el.querySelector("img") && z >= 10)) el.remove();
   });
 
+  removeAntiAdblock();
+
   document.documentElement.style.overflow = "";
   if (document.body) document.body.style.overflow = "";
+}
+
+// Panel "Adblock Terdeteksi" (Komiku dan situs lain): lapisan fixed hampir layar penuh
+// dengan teks soal adblock. ID-nya acak, jadi dikenali dari isi dan ukurannya.
+// Disembunyikan, BUKAN dihapus: kalau dihapus, script-nya langsung membuat ulang terus-menerus.
+const ANTI_ADBLOCK_TEXT = /ad\s?block(er)?\s+(terdeteksi|detected)|matikan\s+ad\s?block|disable\s+(your\s+)?ad\s?block/i;
+function removeAntiAdblock() {
+  document.querySelectorAll("body > div, body > section, body > aside").forEach(el => {
+    if (el.dataset.adinverseHidden) return;
+    if (getComputedStyle(el).position !== "fixed") return;
+    const r = el.getBoundingClientRect();
+    if (r.width < innerWidth * 0.8 || r.height < innerHeight * 0.8) return;
+    if (!ANTI_ADBLOCK_TEXT.test(el.textContent || "")) return;
+    if (!safeToRemove(el)) return;
+    el.dataset.adinverseHidden = "1";
+    el.style.setProperty("display", "none", "important");
+  });
+  // Halaman sering dikunci (tidak bisa scroll / blur) saat panel tampil
+  for (const el of [document.documentElement, document.body]) {
+    if (!el) continue;
+    if (getComputedStyle(el).overflow === "hidden") el.style.setProperty("overflow", "auto", "important");
+    if (el.style.filter) el.style.filter = "";
+  }
 }
 
 // Idlix: iklan video pre-roll diputar di <video> yang sama dengan film.

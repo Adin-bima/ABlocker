@@ -1,12 +1,13 @@
 # adinverse-clearer
 
-Extension Chrome (Manifest V3) untuk menghapus banner judi, overlay di depan player, popup, dan pop-under di situs streaming anime dan film:
+Extension Chrome (Manifest V3) untuk menghapus banner judi, overlay di depan player, popup, dan pop-under di situs streaming anime, film, dan baca komik:
 
 - Oploverz
 - Samehadaku
 - Otakudesu
 - Anoboy
 - Idlix
+- Komiku
 
 Berlaku juga untuk domain mirror selama nama host-nya mengandung nama situs di atas.
 

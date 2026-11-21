@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "adinverse-clearer",
   "version": "1.5.0",
-  "description": "Hapus banner judi, popup, overlay, iklan video, pop-under dan script iklan di situs streaming anime & film.",
+  "description": "Hapus banner judi, popup, overlay, iklan video, pop-under, peringatan anti-adblock dan script iklan di situs streaming anime, film & komik.",
   "permissions": [
     "declarativeNetRequest"
   ],
@@ -28,7 +28,8 @@
         "*://*samehadaku*",
         "*://*otakudesu*",
         "*://*anoboy*",
-        "*://*idlix*"
+        "*://*idlix*",
+        "*://*komiku*"
       ],
       "js": [
         "nopopup.js"
@@ -45,7 +46,8 @@
         "*://*samehadaku*",
         "*://*otakudesu*",
         "*://*anoboy*",
-        "*://*idlix*"
+        "*://*idlix*",
+        "*://*komiku*"
       ],
       "css": [
         "hide.css"
