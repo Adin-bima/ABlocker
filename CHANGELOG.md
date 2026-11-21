@@ -2,7 +2,7 @@
 
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/), versi mengikuti [Semantic Versioning](https://semver.org/lang/id/).
 
-## [Unreleased]
+## [1.6.0-alpha.1] - 2026-11-21
 
 ### Ditambahkan
 - Dukungan Idlix: banner `.nb-sponsor-pair`, widget live chat `xyzchat`, menu "Games", banner "SPONSORED" di player.
