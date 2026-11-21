@@ -467,7 +467,8 @@
     "anoboy.si",
     "anoboy.lol",
     "idlixku.com",
-    "komiku.org"
+    "komiku.org",
+    "keikomik.net"
    ],
    "resourceTypes": [
     "script",
@@ -580,6 +581,47 @@
    "initiatorDomains": [
     "komiku.org"
    ],
+   "resourceTypes": [
+    "script"
+   ]
+  }
+ },
+ {
+  "id": 29,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "funny-blind.com",
+    "guidepaparazzisurface.com",
+    "unlinedsound.com",
+    "bauval.org",
+    "massivesalad.com",
+    "deductgreedyheadroom.com",
+    "nappyonsetstiffness.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "websocket",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 30,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "regexFilter": "^https?://([^/]*\\.)?keikomik\\.[a-z]+/C[bp][0-9_]*\\.js",
    "resourceTypes": [
     "script"
    ]

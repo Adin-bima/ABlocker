@@ -29,7 +29,8 @@
         "*://*otakudesu*",
         "*://*anoboy*",
         "*://*idlix*",
-        "*://*komiku*"
+        "*://*komiku*",
+        "*://*keikomik*"
       ],
       "js": [
         "nopopup.js"
@@ -47,7 +48,8 @@
         "*://*otakudesu*",
         "*://*anoboy*",
         "*://*idlix*",
-        "*://*komiku*"
+        "*://*komiku*",
+        "*://*keikomik*"
       ],
       "css": [
         "hide.css"

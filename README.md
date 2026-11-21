@@ -8,6 +8,7 @@ Extension Chrome (Manifest V3) untuk menghapus banner judi, overlay di depan pla
 - Anoboy
 - Idlix
 - Komiku
+- Keikomik
 
 Berlaku juga untuk domain mirror selama nama host-nya mengandung nama situs di atas.
 

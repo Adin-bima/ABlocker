@@ -7,7 +7,7 @@
   //    Extension Chrome sudah memblokirnya di jaringan (rules.json); ini cadangan untuk userscript.
   //    Script yang ditulis di HTML terdeteksi MutationObserver sebelum dieksekusi; type-nya diganti
   //    supaya browser tidak menjalankannya.
-  const BLOCK_SCRIPT = /(\/asset\/js\/nyamnyam\.js|analytics\.komiku\.org\/api\/w\/pop|wynnscanela\.com|xyzchat\.net|tasterdinger\.com|ads\.desustream\.com)/i;
+  const BLOCK_SCRIPT = /(keikomik\.[a-z]+\/C[bp][0-9_]*\.js|funny-blind\.com|guidepaparazzisurface\.com|unlinedsound\.com|bauval\.org|massivesalad\.com|deductgreedyheadroom\.com|nappyonsetstiffness\.com|\/asset\/js\/nyamnyam\.js|analytics\.komiku\.org\/api\/w\/pop|wynnscanela\.com|xyzchat\.net|tasterdinger\.com|ads\.desustream\.com)/i;
   const killScript = s => {
     if (s.tagName === "SCRIPT" && s.src && BLOCK_SCRIPT.test(s.src)) {
       s.type = "javascript/blocked";
@@ -27,6 +27,25 @@
     if (url && !sameSite(url)) return null;
     return realOpen.call(this, url, ...r);
   };
+
+  // 1b. Trik pop-under: ambil window.open "asli" dari iframe kosong. Tutup juga jalur itu.
+  const cwDesc = Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype, "contentWindow");
+  Object.defineProperty(HTMLIFrameElement.prototype, "contentWindow", {
+    configurable: true,
+    get() {
+      const w = cwDesc.get.call(this);
+      try { if (w && w.open !== window.open) w.open = window.open; } catch {}
+      return w;
+    }
+  });
+
+  // 1c. Judul tab dibajak jadi "(1) New Message!" oleh iklan notifikasi palsu
+  const titleDesc = Object.getOwnPropertyDescriptor(Document.prototype, "title");
+  Object.defineProperty(Document.prototype, "title", {
+    configurable: true,
+    get() { return titleDesc.get.call(this); },
+    set(v) { if (/^\(\d+\)\s*new message/i.test(String(v))) return; titleDesc.set.call(this, v); }
+  });
 
   // 2. Klik apa pun yang dibajak jadi buka tab iklan
   document.addEventListener("click", e => {

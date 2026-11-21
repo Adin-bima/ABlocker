@@ -12,10 +12,11 @@
 // @include      *://*anoboy*/*
 // @include      *://*idlix*/*
 // @include      *://*komiku*/*
+// @include      *://*keikomik*/*
 // ==/UserScript==
 (() => {
 // ---- CSS: sembunyikan iklan sejak awal ----
-const css = "/* Banner judi: hanya bloknya, bukan wadah player */\n.kln, .blox.mlb.kln,\n/* Komiku: popup promo Komiku Plus (di dalam shadow DOM) */\n[data-kv-popup],\n/* Idlix */\n.nb-sponsor-pair, #xyzchat-widget-root, a[href*=\"4play.my.id\"],\n.hero-player-playing a[href^=\"http\"]:not([href*=\"idlix\"]),\n/* Anoboy (ID-nya dobel, jadi pakai [id=...]) */\n#ad_box, #ad_bawah, #countDown2, [id=\"judi\"], [id=\"judi2\"], [id=\"coloma\"],\n/* Otakudesu */\n.iklan, .iklanpost, #iklanbawah, #iklantengah1, .iklantengah1, #overplay,\n/* Samehadaku */\n.ads-area-2col, .ads-grid-wrapper, #player-ad-overlay, .player-ad-overlay, .player-ad-box,\n[class*=\"sgpb-\"], [id*=\"sgpb\"],\nins.adsbygoogle, [id^=\"div-gpt-ad\"],\na[href*=\"safest.com\"], a[href*=\"t2m.io\"]\n{ display: none !important; }\nhtml, body { overflow: auto !important; }\n";
+const css = "/* Banner judi: hanya bloknya, bukan wadah player */\n.kln, .blox.mlb.kln,\n/* Keikomik: kotak iklan Clickadilla & notifikasi palsu (iframe ditempel langsung di <html>) */\n[id^=\"__clb-spot\"], div:has(> [id^=\"__clb-spot\"]),\nhtml > iframe[id^=\"container-\"], iframe[id^=\"container-\"][class^=\"container-\"],\n/* Komiku: popup promo Komiku Plus (di dalam shadow DOM) */\n[data-kv-popup],\n/* Idlix */\n.nb-sponsor-pair, #xyzchat-widget-root, a[href*=\"4play.my.id\"],\n.hero-player-playing a[href^=\"http\"]:not([href*=\"idlix\"]),\n/* Anoboy (ID-nya dobel, jadi pakai [id=...]) */\n#ad_box, #ad_bawah, #countDown2, [id=\"judi\"], [id=\"judi2\"], [id=\"coloma\"],\n/* Otakudesu */\n.iklan, .iklanpost, #iklanbawah, #iklantengah1, .iklantengah1, #overplay,\n/* Samehadaku */\n.ads-area-2col, .ads-grid-wrapper, #player-ad-overlay, .player-ad-overlay, .player-ad-box,\n[class*=\"sgpb-\"], [id*=\"sgpb\"],\nins.adsbygoogle, [id^=\"div-gpt-ad\"],\na[href*=\"safest.com\"], a[href*=\"t2m.io\"]\n{ display: none !important; }\nhtml, body { overflow: auto !important; }\n";
 const addCss = () => {
   if (document.getElementById("adinverse-css")) return;
   const s = document.createElement("style"); s.id = "adinverse-css"; s.textContent = css;
@@ -33,7 +34,7 @@ addCss(); document.addEventListener("DOMContentLoaded", addCss);
   //    Extension Chrome sudah memblokirnya di jaringan (rules.json); ini cadangan untuk userscript.
   //    Script yang ditulis di HTML terdeteksi MutationObserver sebelum dieksekusi; type-nya diganti
   //    supaya browser tidak menjalankannya.
-  const BLOCK_SCRIPT = /(\/asset\/js\/nyamnyam\.js|analytics\.komiku\.org\/api\/w\/pop|wynnscanela\.com|xyzchat\.net|tasterdinger\.com|ads\.desustream\.com)/i;
+  const BLOCK_SCRIPT = /(keikomik\.[a-z]+\/C[bp][0-9_]*\.js|funny-blind\.com|guidepaparazzisurface\.com|unlinedsound\.com|bauval\.org|massivesalad\.com|deductgreedyheadroom\.com|nappyonsetstiffness\.com|\/asset\/js\/nyamnyam\.js|analytics\.komiku\.org\/api\/w\/pop|wynnscanela\.com|xyzchat\.net|tasterdinger\.com|ads\.desustream\.com)/i;
   const killScript = s => {
     if (s.tagName === "SCRIPT" && s.src && BLOCK_SCRIPT.test(s.src)) {
       s.type = "javascript/blocked";
@@ -53,6 +54,25 @@ addCss(); document.addEventListener("DOMContentLoaded", addCss);
     if (url && !sameSite(url)) return null;
     return realOpen.call(this, url, ...r);
   };
+
+  // 1b. Trik pop-under: ambil window.open "asli" dari iframe kosong. Tutup juga jalur itu.
+  const cwDesc = Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype, "contentWindow");
+  Object.defineProperty(HTMLIFrameElement.prototype, "contentWindow", {
+    configurable: true,
+    get() {
+      const w = cwDesc.get.call(this);
+      try { if (w && w.open !== window.open) w.open = window.open; } catch {}
+      return w;
+    }
+  });
+
+  // 1c. Judul tab dibajak jadi "(1) New Message!" oleh iklan notifikasi palsu
+  const titleDesc = Object.getOwnPropertyDescriptor(Document.prototype, "title");
+  Object.defineProperty(Document.prototype, "title", {
+    configurable: true,
+    get() { return titleDesc.get.call(this); },
+    set(v) { if (/^\(\d+\)\s*new message/i.test(String(v))) return; titleDesc.set.call(this, v); }
+  });
 
   // 2. Klik apa pun yang dibajak jadi buka tab iklan
   document.addEventListener("click", e => {

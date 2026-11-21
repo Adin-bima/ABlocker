@@ -2,6 +2,13 @@
 
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/), versi mengikuti [Semantic Versioning](https://semver.org/lang/id/).
 
+## [Unreleased]
+
+### Ditambahkan
+- Dukungan Keikomik: sembunyikan kotak iklan `__clb-spot` (Clickadilla) dan notifikasi palsu "New message" (iframe `container-*` di luar `<body>`); blokir pemuat iklan yang menyamar `Cb*.js`/`Cp.js` dan 7 domain jaringan iklan.
+- Pemblokir pop-under menutup trik `window.open` dari iframe kosong.
+- Cegah judul tab dibajak menjadi "(1) New Message!".
+
 ## [1.6.0-alpha.1] - 2026-11-21
 
 ### Ditambahkan

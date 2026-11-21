@@ -1,5 +1,8 @@
 /* Banner judi: hanya bloknya, bukan wadah player */
 .kln, .blox.mlb.kln,
+/* Keikomik: kotak iklan Clickadilla & notifikasi palsu (iframe ditempel langsung di <html>) */
+[id^="__clb-spot"], div:has(> [id^="__clb-spot"]),
+html > iframe[id^="container-"], iframe[id^="container-"][class^="container-"],
 /* Komiku: popup promo Komiku Plus (di dalam shadow DOM) */
 [data-kv-popup],
 /* Idlix */
