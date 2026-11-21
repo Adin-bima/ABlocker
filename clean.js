@@ -28,6 +28,18 @@ function clean() {
     if (hosts.size >= 2 && imgLinks.length / allLinks >= 0.8) box.remove();
   });
 
+  // Banner lebar tunggal: link ke situs luar yang isinya cuma 1 gambar dengan rasio >= 3:1
+  // (ukuran banner standar 728x90, 1456x90, 970x250, dll). Poster film/anime selalu tegak, jadi aman.
+  document.querySelectorAll("a[href] > img:only-child").forEach(img => {
+    const a = img.parentElement;
+    if (!extHost(a) || !img.naturalWidth || !img.naturalHeight) return;
+    if (img.naturalWidth / img.naturalHeight < 3) return;
+    let box = a;
+    while (box.parentElement && box.parentElement.children.length === 1 &&
+           box.parentElement !== document.body && safeToRemove(box.parentElement)) box = box.parentElement;
+    if (safeToRemove(box)) box.remove();
+  });
+
   document.querySelectorAll(".kln, [class*='sgpb-']").forEach(e => { if (safeToRemove(e)) e.remove(); });
 
   document.querySelectorAll("a[href]").forEach(a => {
@@ -66,8 +78,33 @@ function clean() {
   if (document.body) document.body.style.overflow = "";
 }
 
+// Idlix: iklan video pre-roll diputar di <video> yang sama dengan film.
+// Selama badge "AD" tampil: percepat 16x (30 detik jadi ~2 detik) dan klik "Skip Ad" kalau ada.
+// Tidak dibisukan: player mengingat status mute dan menerapkannya ke film.
+// Tidak pakai lompat waktu (currentTime): posisinya bisa terbawa ke film.
+function skipVideoAds() {
+  const badge = [...document.querySelectorAll(".content-badge--gold, [class*='ad-badge']")]
+    .find(b => b.textContent.trim().toUpperCase() === "AD");
+  const frame = badge?.closest(".hero-player-frame, .hero-player-playing") || null;
+  document.querySelectorAll("video").forEach(v => {
+    if (frame && frame.contains(v)) {
+      v.dataset.adinverseAd = "1";
+      if (v.playbackRate !== 16) v.playbackRate = 16;
+    } else if (v.dataset.adinverseAd) {
+      delete v.dataset.adinverseAd;
+      v.playbackRate = 1;
+    }
+  });
+  if (frame) [...frame.querySelectorAll("button")].find(b => /skip ad|lewati/i.test(b.textContent))?.click();
+}
+setInterval(skipVideoAds, 250);
+
 let t;
 new MutationObserver(() => { clearTimeout(t); t = setTimeout(clean, 200); })
   .observe(document.documentElement, { childList: true, subtree: true });
 document.addEventListener("DOMContentLoaded", clean);
+// Gambar banner yang baru selesai dimuat (ukurannya baru diketahui setelah load)
+document.addEventListener("load", e => {
+  if (e.target.tagName === "IMG") { clearTimeout(t); t = setTimeout(clean, 200); }
+}, true);
 addEventListener("load", clean);

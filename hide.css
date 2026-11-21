@@ -1,5 +1,8 @@
 /* Banner judi: hanya bloknya, bukan wadah player */
 .kln, .blox.mlb.kln,
+/* Idlix */
+.nb-sponsor-pair, #xyzchat-widget-root, a[href*="4play.my.id"],
+.hero-player-playing a[href^="http"]:not([href*="idlix"]),
 /* Anoboy (ID-nya dobel, jadi pakai [id=...]) */
 #ad_box, #ad_bawah, #countDown2, [id="judi"], [id="judi2"], [id="coloma"],
 /* Otakudesu */

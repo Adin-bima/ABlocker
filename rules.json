@@ -465,7 +465,8 @@
     "otakudesu.cam",
     "anoboy.at",
     "anoboy.si",
-    "anoboy.lol"
+    "anoboy.lol",
+    "idlixku.com"
    ],
    "resourceTypes": [
     "script",
@@ -506,6 +507,28 @@
     "sub_frame",
     "image",
     "xmlhttprequest",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 25,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "xyzchat.net",
+    "tasterdinger.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "websocket",
     "other"
    ]
   }
