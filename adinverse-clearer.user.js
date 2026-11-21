@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         adinverse-clearer
-// @version      1.5
+// @version      1.5.0-alpha.1
 // @description  Hapus banner judi, popup, overlay, pop-under dan script iklan di situs streaming anime.
 // @author       Adin-bima
 // @run-at       document-start

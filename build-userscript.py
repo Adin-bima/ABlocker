@@ -6,7 +6,7 @@ globs = m["content_scripts"][0]["include_globs"]
 css = open("hide.css").read()
 head = ["// ==UserScript==",
         "// @name         adinverse-clearer",
-        f"// @version      {m['version']}",
+        f"// @version      {m.get('version_name', m['version'])}",
         "// @description  " + m["description"],
         "// @author       Adin-bima",
         "// @run-at       document-start",
