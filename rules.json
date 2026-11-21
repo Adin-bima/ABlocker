@@ -1,0 +1,513 @@
+[
+ {
+  "id": 1,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "popads.net"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 2,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "popcash.net"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 3,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "propellerads.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 4,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "adsterra.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 5,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "highperformanceformat.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 6,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "profitablegatecpm.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 7,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "onclickads.net"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 8,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "onclickperformance.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 9,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "exoclick.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 10,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "juicyads.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 11,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "hilltopads.net"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 12,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "a-ads.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 13,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "adcash.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 14,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "clickadu.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 15,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "monetag.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 16,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "dolohen.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 17,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "t2m.io"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 18,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "histats.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 19,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "doubleclick.net"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 20,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "googlesyndication.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 21,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "adnxs.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "main_frame",
+    "ping",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 22,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "regexFilter": "^https?://[^/]*(777|safest\\.com|slot|gacor|toto|bandar|judi|casino|qqsawer|7kucing|emas5000)",
+   "initiatorDomains": [
+    "oploverz.am",
+    "oploverz.best",
+    "oploverz.co",
+    "oploverz.ac",
+    "oploverz.org",
+    "oploverz.id",
+    "samehadaku.how",
+    "samehadaku.email",
+    "samehadaku.care",
+    "samehadaku.mba",
+    "samehadaku.li",
+    "otakudesu.blog",
+    "otakudesu.cloud",
+    "otakudesu.cam",
+    "anoboy.at",
+    "anoboy.si",
+    "anoboy.lol"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "main_frame",
+    "xmlhttprequest",
+    "other"
+   ]
+  }
+ },
+ {
+  "id": 23,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "urlFilter": "/wp-content/plugins/popup-builder/",
+   "resourceTypes": [
+    "script",
+    "stylesheet"
+   ]
+  }
+ },
+ {
+  "id": 24,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "requestDomains": [
+    "ads.desustream.com"
+   ],
+   "resourceTypes": [
+    "script",
+    "sub_frame",
+    "image",
+    "xmlhttprequest",
+    "other"
+   ]
+  }
+ }
+]

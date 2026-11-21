@@ -1,0 +1,57 @@
+{
+  "manifest_version": 3,
+  "name": "adinverse-clearer",
+  "version": "1.5",
+  "description": "Hapus banner judi, popup, overlay, pop-under dan script iklan di situs streaming anime.",
+  "permissions": [
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ads",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "include_globs": [
+        "*://*oploverz*",
+        "*://*samehadaku*",
+        "*://*otakudesu*",
+        "*://*anoboy*"
+      ],
+      "js": [
+        "nopopup.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "include_globs": [
+        "*://*oploverz*",
+        "*://*samehadaku*",
+        "*://*otakudesu*",
+        "*://*anoboy*"
+      ],
+      "css": [
+        "hide.css"
+      ],
+      "js": [
+        "clean.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

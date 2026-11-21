@@ -1,0 +1,13 @@
+/* Banner judi: hanya bloknya, bukan wadah player */
+.kln, .blox.mlb.kln,
+/* Anoboy (ID-nya dobel, jadi pakai [id=...]) */
+#ad_box, #ad_bawah, #countDown2, [id="judi"], [id="judi2"], [id="coloma"],
+/* Otakudesu */
+.iklan, .iklanpost, #iklanbawah, #iklantengah1, .iklantengah1, #overplay,
+/* Samehadaku */
+.ads-area-2col, .ads-grid-wrapper, #player-ad-overlay, .player-ad-overlay, .player-ad-box,
+[class*="sgpb-"], [id*="sgpb"],
+ins.adsbygoogle, [id^="div-gpt-ad"],
+a[href*="safest.com"], a[href*="t2m.io"]
+{ display: none !important; }
+html, body { overflow: auto !important; }
